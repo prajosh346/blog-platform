@@ -21,21 +21,34 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
-    public LoginResponse login(
-            LoginRequest request
-    ) {
+    public LoginResponse login(LoginRequest request) {
 
-        authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
-                        request.getPassword()
-                )
-        );
+        try {
 
-        String token = jwtService.generateToken(
-                request.getUsername()
-        );
 
-        return new LoginResponse(token);
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            request.getUsername(),
+                            request.getPassword()
+                    )
+            );
+
+
+
+            String token = jwtService.generateToken(
+                    request.getUsername()
+            );
+
+
+
+            return new LoginResponse(token);
+
+        } catch (Exception e) {
+
+
+            e.printStackTrace();
+
+            throw e;
+        }
     }
 }
