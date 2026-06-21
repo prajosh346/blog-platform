@@ -9,4 +9,6 @@ public interface VisibilityTypeRepository
         extends JpaRepository<VisibilityType, Long> {
 
     Optional<VisibilityType> findByName(String name);
+
+    boolean existsByName(String name);
 }
