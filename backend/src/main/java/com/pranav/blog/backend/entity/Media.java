@@ -28,6 +28,16 @@ public class Media {
 
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
+    @Column(nullable = false, unique = true)
+    private String publicId;
+
+    public String getPublicId() {
+        return publicId;
+    }
+
+    public void setPublicId(String publicId) {
+        this.publicId = publicId;
+    }
 
     @PrePersist
     public void prePersist() {
