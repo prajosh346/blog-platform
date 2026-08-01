@@ -68,4 +68,7 @@ public class JwtService {
                 Claims::getExpiration
         ).before(new Date());
     }
+    public long getExpiration() {
+        return expiration;
+    }
 }

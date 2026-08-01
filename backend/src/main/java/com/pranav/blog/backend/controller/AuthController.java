@@ -2,6 +2,8 @@ package com.pranav.blog.backend.controller;
 
 import com.pranav.blog.backend.dto.LoginRequest;
 import com.pranav.blog.backend.dto.LoginResponse;
+import com.pranav.blog.backend.dto.auth.RefreshTokenRequest;
+import com.pranav.blog.backend.dto.auth.RefreshTokenResponse;
 import com.pranav.blog.backend.service.AuthService;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,5 +24,12 @@ public class AuthController {
             @RequestBody LoginRequest request
     ) {
         return authService.login(request);
+    }
+
+    @PostMapping("/refresh")
+    public RefreshTokenResponse refreshToken(
+            @RequestBody RefreshTokenRequest request
+    ) {
+        return authService.refreshToken(request);
     }
 }

@@ -2,8 +2,18 @@ package com.pranav.blog.backend.entity;
 
 import jakarta.persistence.*;
 
+import java.time.LocalDateTime;
+
 @Entity
-@Table(name = "meta_tags")
+@Table(
+        name = "meta_tags",
+        uniqueConstraints = {
+                @UniqueConstraint(
+                        name = "uk_blog_meta",
+                        columnNames = {"blog_id", "tag_name"}
+                )
+        }
+)
 public class MetaTag {
 
     @Id
@@ -14,21 +24,25 @@ public class MetaTag {
     @JoinColumn(name = "blog_id", nullable = false)
     private Blog blog;
 
-    @Column(nullable = false, length = 100)
-    private String metaName;
+    @Column(name = "tag_name", nullable = false, length = 100)
+    private String tagName;
 
-    @Column(nullable = false, length = 1000)
+    @Column(name = "meta_content", nullable = false, length = 1000)
     private String metaContent;
+
+    @Column(name = "created_at", nullable = false)
+    private LocalDateTime createdAt;
+
+    @PrePersist
+    public void prePersist() {
+        createdAt = LocalDateTime.now();
+    }
 
     public MetaTag() {
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public Blog getBlog() {
@@ -39,12 +53,16 @@ public class MetaTag {
         this.blog = blog;
     }
 
-    public String getMetaName() {
-        return metaName;
+    public void setId(Long id) {
+        this.id = id;
     }
 
-    public void setMetaName(String metaName) {
-        this.metaName = metaName;
+    public String getTagName() {
+        return tagName;
+    }
+
+    public void setTagName(String tagName) {
+        this.tagName = tagName;
     }
 
     public String getMetaContent() {
@@ -54,5 +72,12 @@ public class MetaTag {
     public void setMetaContent(String metaContent) {
         this.metaContent = metaContent;
     }
-// Generate Getters and Setters
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
 }
